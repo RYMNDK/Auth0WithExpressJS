@@ -7,3 +7,4 @@
 * compression request
 * helmet
 * mongodb for storage
+* a proper login page

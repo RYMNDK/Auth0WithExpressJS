@@ -11,7 +11,7 @@ import axios from 'axios';
  */
 function getMessages(identity){
 
-    return ["message hard coded"];
+    return ["Hard coded messages for " + identity];
     //skip client side checking
     //we assume all users of this application are truthful
     /*
