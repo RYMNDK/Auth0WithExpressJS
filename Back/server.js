@@ -52,11 +52,18 @@ app.use(auth({
 app.post("/getMessages", (req, res) => {
     console.log(req.body);
     var messages = [];
+
+    //get rights of the request name
+    //get messages associated with rights
+    //return response to sender
     res.json({
         "messages" : []
     });
 });
 
+app.post("/callback", (req, res) => {
+    console.log(res.body);
+});
 
 http.createServer(app).listen(process.env.PORT, () => {
     console.log(`listening on ${appUrl}`);

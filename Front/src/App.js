@@ -1,50 +1,48 @@
 import './App.css';
 import { Dropdown } from 'react-bootstrap';
-import React from 'react';
+import React, { useState } from 'react';
 
-import Axios from 'axios';
-
-var secretMessages = [];
-var errorInfo = "";
+import axios from 'axios';
 
 /**
  * [someFunction description]
  * @param  {[type]} arg1 [description]
  * @return {[type]}      [description]
  */
-function getSecret(identity){
-    secretMessages = [];
-    errorInfo = "";
+function getMessages(identity){
 
-    console.log(identity);
-    //client side checking
+    return ["message hard coded"];
+    //skip client side checking
     //we assume all users of this application are truthful
-    if (identity == null)  {
-        errorInfo = "unknown user"
-    }
-
-    Axios.post("http://localhost:8000/getMessages", {"name": identity})
+    /*
+    axios({
+        method: 'post',
+        url: 'http://localhost:8000/getMessages',
+        data: {
+            "name": identity
+        }
+    })
     .then (res => {
-        secretMessages = res;
+        _secretMessages = ["message 1"];
+        alert(res.data);
     }) 
     .catch (error => {
-        errorInfo = error;
+        alert(error);
     })
+    */
 }
 
 /**
  * [someFunction description]
  * @return {[type]}      [description]
  */
-function showSecret(){
-    if (errorInfo !== "") {
-        return(<p>{errorInfo}</p>);
-    } else if (secretMessages.length === 0)
+function showSecret(secrets){
+    if (secrets.length === 0)
         return(<p>No messages visible</p>);
     else {
         return (
             <ul>
-              {secretMessages.map(secretMessage => (
+              {secrets.map(secretMessage => (
                 <li>{secretMessage}</li>
               ))}
             </ul>
@@ -54,6 +52,12 @@ function showSecret(){
 }
 
 function App() {
+    //set initial state
+    const [secrets, setMessages] = useState([]);
+    //get messages visible with that name and update the messages
+    const getName = (name) => {
+        setMessages(getMessages(name));
+    }
 
     return (
         <div className="App">
@@ -61,7 +65,7 @@ function App() {
             <p>
                 Please select your name from the dropdown menu.
 
-                <Dropdown onSelect={getSecret}>
+                <Dropdown onSelect={getName}>
                     <Dropdown.Toggle variant="success" id="dropdown-basic">
                         Please select name
                     </Dropdown.Toggle>
@@ -76,10 +80,10 @@ function App() {
             </p>
 
             <p>
-                Messages you can see: 
+                Messages visible: 
             </p>
             <p>
-                {showSecret()}
+                {showSecret(secrets)}
             </p>
 
           </header>
