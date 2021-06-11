@@ -3,3 +3,7 @@
 * Redis caching
 * Https and additional security features
 * Use RPC instead of rest
+* https and fs read certification
+* compression request
+* helmet
+* mongodb for storage
