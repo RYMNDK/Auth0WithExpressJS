@@ -10,8 +10,7 @@ ReactDOM.render(
     domain = "dev-5und1roc.us.auth0.com"
     clientId = "a2kk4RMlM4RmOXykY7kjhRwK3DQKmoPW"
     redirectUri={window.location.origin}
-    audience="https://dev-5und1roc.us.auth0.com/api/v2/"
-    scope="read:current_user update:current_user_metadata"
+    audience="https://quickstarts/api"
     >
 
         <React.StrictMode>

@@ -1,6 +1,6 @@
 # users for testing 
-## name from dropdown
-username
+## name
+useremail
 password
 
 ## Alex

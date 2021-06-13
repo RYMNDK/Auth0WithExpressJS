@@ -1,52 +1,52 @@
 import './App.css';
 import React, { useState } from 'react';
 import { Button } from 'react-bootstrap';
-
-import axios from 'axios';
 import { useAuth0 } from '@auth0/auth0-react';
 
 /**
  * [get messages]
- * @param  {[json]} identity [user identity returned by Auth0]
- * @return {[List]}          [List of secrets visible to {identity.name}}]
+ * @param  {[json]} token [user identity token returned by Auth0]
+ * @return {[List]}       [List of secrets visible to {identity.name}}]
  */
-function getMessages(identity){
+async function getMessages(token){
+    var messages = "hard coded messages";
 
-    //todo:
-    //pack this into jwt and send to backend
-
-    /*
-    axios({
-        method: 'post',
-        url: 'http://localhost:8000/getMessages',
-        data: {
-            "name": identity
+    //express server listening on 8000
+    await fetch("http://localhost:8000/api/getMessages", {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    }).then(
+        async (res) => {
+            if (res.status === 200 || res.status === 304) {
+                //get messages from response body
+                await res.json().then ((result) => { 
+                    console.log(result.messages);
+                    messages = (result.messages);
+                    return messages;
+                } );
+            } else {
+                //most likely token expired
+                messages = ("Error in API CALL");
+                return messages;
+            }       
         }
-    })
-    .then (res => {
-        _secretMessages = ["message 1"];
-        alert(res.data);
-    }) 
-    .catch (error => {
-        alert(error);
-    })
-    */
-
-    return ["Hard coded messages for " + identity.name];
+    )
+    return messages;
 }
 
 /**
  * [Show Secret] 
- * @param  {[List]} secrets [A list of messages visible to logged in user]
- * @return {[Html]}         [A html unordered list view of {secrets}]
+ * @param  {[String]} secrets [A list of messages visible to logged in user]
+ * @return {[Html]}           [A html unordered list view of {secrets}]
  */
 function showSecret(secrets){
-    if (secrets.length === 0)
+    if (typeof secrets !== "string" || secrets === "")
         return(<p>No messages visible</p>);
     else {
         return (
             <ul>
-              {secrets.map(secretMessage => (
+              {secrets.split("|").map(secretMessage => (
                 <li>{secretMessage}</li>
               ))}
             </ul>
@@ -55,43 +55,21 @@ function showSecret(secrets){
 }
 
 function App() {
-    const { loginWithRedirect, logout, user, isAuthenticated, getAccessTokenSilently } = useAuth0();
+    const { loginWithRedirect, logout, user, isAuthenticated, getAccessTokenSilently} = useAuth0();
 
-    const [secrets, setMessages] = useState([]);
+    const [secrets, setMessages] = useState("");
     //get messages visible with that name and update the messages
     const getName = (user) => {
         if (!isAuthenticated){
             alert("Login required");
         } else {
-            setMessages(getMessages(user));
+            getAccessTokenSilently().then (
+                async (usertoken) => {
+                    var messages = await getMessages(usertoken);
+                    setMessages(messages);
+                });
         }
-
-
     }
-
-    if (isAuthenticated){
-        const domain = "dev-5und1roc.us.auth0.com";
-    
-        const accessToken = getAccessTokenSilently({
-            audience: `https://${domain}/api/v2/`,
-            scope: "read:current_user",
-        });
-    
-        const userDetailsByIdUrl = `https://${domain}/api/v2/users/${user.sub}`;
-    
-        const metadataResponse = fetch(userDetailsByIdUrl, {
-            headers: {
-            Authorization: `Bearer ${accessToken}`,
-            },
-        });
-        
-        //console.log(userDetailsByIdUrl);
-        accessToken.then((x) => {console.log(x)});
-        //console.log(metadataResponse);    
-
-        //read:roles get roles of the user
-    }
-
 
     return (
         <div className="App">

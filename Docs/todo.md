@@ -3,6 +3,5 @@
 * Redis caching
 * https and fs read certification
 * compression request
-* helmet
 * mongodb for resource storage
 * automated testing
