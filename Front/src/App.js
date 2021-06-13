@@ -1,19 +1,21 @@
 import './App.css';
-import { Dropdown } from 'react-bootstrap';
 import React, { useState } from 'react';
+import { Button } from 'react-bootstrap';
 
 import axios from 'axios';
+import { useAuth0 } from '@auth0/auth0-react';
 
 /**
- * [someFunction description]
- * @param  {[type]} arg1 [description]
- * @return {[type]}      [description]
+ * [get messages]
+ * @param  {[json]} identity [user identity returned by Auth0]
+ * @return {[List]}          [List of secrets visible to {identity.name}}]
  */
 function getMessages(identity){
 
-    return ["Hard coded messages for " + identity];
-    //skip client side checking
-    //we assume all users of this application are truthful
+    return ["Hard coded messages for " + identity.name];
+    //todo:
+    //pack this into jwt and send to backend
+
     /*
     axios({
         method: 'post',
@@ -33,8 +35,9 @@ function getMessages(identity){
 }
 
 /**
- * [someFunction description]
- * @return {[type]}      [description]
+ * [Show Secret] 
+ * @param  {[List]} secrets [A list of messages visible to logged in user]
+ * @return {[Html]}         [A html unordered list view of {secrets}]
  */
 function showSecret(secrets){
     if (secrets.length === 0)
@@ -48,43 +51,53 @@ function showSecret(secrets){
             </ul>
         );
     }
-
 }
 
 function App() {
     //set initial state
     const [secrets, setMessages] = useState([]);
     //get messages visible with that name and update the messages
-    const getName = (name) => {
-        setMessages(getMessages(name));
+    const getName = (user) => {
+        if (!isAuthenticated){
+            alert("Login required");
+        } else {
+            setMessages(getMessages(user));
+        }
     }
+
+    const {loginWithRedirect, logout, user, isAuthenticated } = useAuth0();
 
     return (
         <div className="App">
           <header className="App-header">
+            <h1>Show secret messages with Auth0</h1>
+
             <p>
-                Please select your name from the dropdown menu.
-
-                <Dropdown onSelect={getName}>
-                    <Dropdown.Toggle variant="success" id="dropdown-basic">
-                        Please select name
-                    </Dropdown.Toggle>
-
-                    <Dropdown.Menu id="dropdown-menu">
-                        <Dropdown.Item eventKey = "Alex">Alex</Dropdown.Item>
-                        <Dropdown.Item eventKey = "Bob">Bob</Dropdown.Item>
-                        <Dropdown.Item eventKey = "Matt">Matt</Dropdown.Item>
-                        <Dropdown.Item eventKey = "Raymond">Raymond</Dropdown.Item>
-                    </Dropdown.Menu>
-                </Dropdown>
+                Please click the buttons from left to right
             </p>
 
             <p>
-                Messages visible: 
+                <Button onClick = {() => loginWithRedirect()}>
+                    Log In
+                </Button>
+                &nbsp;
+                <Button onClick = {() => {getName(user)}}>
+                    Show Messages
+                </Button>
+                &nbsp;
+                <Button onClick = {() => logout() }>
+                    Log Out
+                </Button>
             </p>
-            <p>
+
+            <div>
+                {((!isAuthenticated) ? "Not logged in" : "Welcome " + user.name)}
+            </div>
+
+            <div>
                 {showSecret(secrets)}
-            </p>
+            </div>
+
 
           </header>
         </div>
