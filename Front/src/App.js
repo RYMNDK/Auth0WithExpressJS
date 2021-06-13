@@ -12,7 +12,6 @@ import { useAuth0 } from '@auth0/auth0-react';
  */
 function getMessages(identity){
 
-    return ["Hard coded messages for " + identity.name];
     //todo:
     //pack this into jwt and send to backend
 
@@ -32,6 +31,8 @@ function getMessages(identity){
         alert(error);
     })
     */
+
+    return ["Hard coded messages for " + identity.name];
 }
 
 /**
@@ -54,7 +55,8 @@ function showSecret(secrets){
 }
 
 function App() {
-    //set initial state
+    const { loginWithRedirect, logout, user, isAuthenticated, getAccessTokenSilently } = useAuth0();
+
     const [secrets, setMessages] = useState([]);
     //get messages visible with that name and update the messages
     const getName = (user) => {
@@ -63,9 +65,33 @@ function App() {
         } else {
             setMessages(getMessages(user));
         }
+
+
     }
 
-    const {loginWithRedirect, logout, user, isAuthenticated } = useAuth0();
+    if (isAuthenticated){
+        const domain = "dev-5und1roc.us.auth0.com";
+    
+        const accessToken = getAccessTokenSilently({
+            audience: `https://${domain}/api/v2/`,
+            scope: "read:current_user",
+        });
+    
+        const userDetailsByIdUrl = `https://${domain}/api/v2/users/${user.sub}`;
+    
+        const metadataResponse = fetch(userDetailsByIdUrl, {
+            headers: {
+            Authorization: `Bearer ${accessToken}`,
+            },
+        });
+        
+        //console.log(userDetailsByIdUrl);
+        accessToken.then((x) => {console.log(x)});
+        //console.log(metadataResponse);    
+
+        //read:roles get roles of the user
+    }
+
 
     return (
         <div className="App">
@@ -77,24 +103,29 @@ function App() {
             </p>
 
             <p>
-                <Button onClick = {() => loginWithRedirect()}>
+                <Button onClick = {() => (!isAuthenticated) ? loginWithRedirect() : alert("Log Out first!") }>
                     Log In
                 </Button>
                 &nbsp;
-                <Button onClick = {() => {getName(user)}}>
+                <Button onClick = {() => getName(user)}>
                     Show Messages
                 </Button>
                 &nbsp;
-                <Button onClick = {() => logout() }>
+                <Button onClick = {() => (isAuthenticated) ? logout() : alert("Log In first!") }>
                     Log Out
                 </Button>
             </p>
 
             <div>
                 {((!isAuthenticated) ? "Not logged in" : "Welcome " + user.name)}
-            </div>
+                { isAuthenticated && (
+                    <div>
+                        <img src={user.picture} alt={user.name} />
+                        <h2>{user.name}</h2>
+                        <p>{user.email}</p>
+                    </div>
+                )}
 
-            <div>
                 {showSecret(secrets)}
             </div>
 

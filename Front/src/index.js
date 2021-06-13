@@ -5,14 +5,13 @@ import './index.css';
 import App from './App';
 import { Auth0Provider } from "@auth0/auth0-react";
 
-const domain = "dev-5und1roc.us.auth0.com"
-const clientId = "a2kk4RMlM4RmOXykY7kjhRwK3DQKmoPW"
-
 ReactDOM.render(
     <Auth0Provider
-    domain = {domain}
-    clientId = {clientId}
+    domain = "dev-5und1roc.us.auth0.com"
+    clientId = "a2kk4RMlM4RmOXykY7kjhRwK3DQKmoPW"
     redirectUri={window.location.origin}
+    audience="https://dev-5und1roc.us.auth0.com/api/v2/"
+    scope="read:current_user update:current_user_metadata"
     >
 
         <React.StrictMode>
