@@ -46,9 +46,9 @@ function showSecret(secrets){
     else {
         return (
             <ul>
-              {secrets.split("|").map(secretMessage => (
-                <li>{secretMessage}</li>
-              ))}
+                {secrets.split("|").map(secretMessage => (
+                    <li>{secretMessage}</li>
+                ))}
             </ul>
         );
     }
@@ -74,13 +74,14 @@ function App() {
     return (
         <div className="App">
           <header className="App-header">
-            <h1>Show secret messages with Auth0</h1>
-
-            <p>
-                Please click the buttons from left to right
-            </p>
-
-            <p>
+            <div>
+                <h1>Show secret messages with Auth0</h1>
+                <p>
+                    Please click the buttons from left to right
+                </p>
+            </div>
+            
+            <div>
                 <Button onClick = {() => (!isAuthenticated) ? loginWithRedirect() : alert("Log Out first!") }>
                     Log In
                 </Button>
@@ -92,7 +93,9 @@ function App() {
                 <Button onClick = {() => (isAuthenticated) ? logout() : alert("Log In first!") }>
                     Log Out
                 </Button>
-            </p>
+            </div>
+
+            <hr/>  
 
             <div>
                 {((!isAuthenticated) ? "Not logged in" : "Welcome " + user.name)}
@@ -104,9 +107,9 @@ function App() {
                     </div>
                 )}
 
+                <p>Messages visible</p>
                 {showSecret(secrets)}
             </div>
-
 
           </header>
         </div>
