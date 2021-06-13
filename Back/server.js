@@ -3,36 +3,33 @@
  * User Bob should have access (able to see) only resource 2
  * User Matt should have access (able to see) resource 1 and 3 only.
  */
-//permissions: a dictionary with name to resource mapping
-const rights = {
-    ["Alex"]: [0, 1, 2],
-    ["Bob"]: [1],
-    ["Matt"]: [0, 2]
-}
-
-//resources available
-const resources = [
-    "Message 1: visible to Alex and Matt",
-    "Message 2: visible to Alex and Bob",
-    "Message 3: visible to Alex and Matt"
-];
+//permissions are set by roles in on Auth0 dashboard Role-Based Access Control (RBAC)
+//resources available, assume each resource is mapped to a role
+const resources = {
+    "m1" : "Message 1: visible to Alex and Matt",
+    "m2" : "Message 2: visible to Alex and Bob",
+    "m3" : "Message 3: visible to Alex and Matt"
+};
 
 require('dotenv').config();
 const express = require("express");
 const http = require('http');
 const morgan = require("morgan");
 
-var cors = require('cors');
+const cors = require('cors');
+
+const jwt = require('express-jwt');
 
 const app = express();
 app.use(morgan("common"));
 
-const appUrl = process.env.BASE_URL || `http://localhost:${process.env.PORT}`;
+const appUrl = `http://localhost:${process.env.PORT}`;
 
 //parse body and url
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
+//using cors because request is from 3000
 app.use(cors({
     //origin: ["http://localhost:3001"],
     methods: ["GET", "POST"],
@@ -42,28 +39,34 @@ app.use(cors({
 //app.use(compression());
 //helmet
 
-const { auth } = require('express-openid-connect');
-
-app.use(auth({
-    auth0Logout: true,
-    baseURL: appUrl
-}));
-
-app.post("/getMessages", (req, res) => {
+//check the req body first
+//app.post("/getMessages", jwt({ secret: process.env.secret, algorithms: ['RS256'] }),
+app.post("/getMessages",
+(req, res) => {
+    //if (req.user === []) return res.sendStatus(401);
     console.log(req.body);
-    var messages = [];
+    var rights = [];    //something from req body
+    var messages = (rights.map(
+        (x) => {
+            return resources[x];
+        }
+    ));
 
-    //get rights of the request name
-    //get messages associated with rights
     //return response to sender
+    res.status = 200;
     res.json({
-        "messages" : []
+        "messages" : messages
     });
 });
 
 app.post("/callback", (req, res) => {
     console.log(res.body);
 });
+
+app.post("/logout", (req, res) => {
+    console.log(res.body);
+});
+
 
 http.createServer(app).listen(process.env.PORT, () => {
     console.log(`listening on ${appUrl}`);

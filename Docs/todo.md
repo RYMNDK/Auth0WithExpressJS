@@ -8,3 +8,4 @@
 * helmet
 * mongodb for storage
 * a proper login page
+* automated testing
