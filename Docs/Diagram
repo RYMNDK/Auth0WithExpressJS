@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" modified="2021-06-13T06:53:59.226Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.77 Safari/537.36 Edg/91.0.864.41" etag="4M8PkdIELFtCVxEzKNVz" version="14.7.7" type="github">
+<mxfile host="app.diagrams.net" modified="2021-06-13T09:12:02.261Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.77 Safari/537.36 Edg/91.0.864.41" etag="2dWwpGWzhylVbqlwInLw" version="14.7.7" type="github">
   <diagram id="KI93dPNmKcXjiZMJYQRa" name="Page-1">
     <mxGraphModel dx="981" dy="548" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
@@ -15,21 +15,6 @@
         </mxCell>
         <mxCell id="qp5eQa1doei-cKYVFk-j-4" value="Express backend" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="520" y="400" width="120" height="60" as="geometry" />
-        </mxCell>
-        <mxCell id="qp5eQa1doei-cKYVFk-j-5" value="" style="endArrow=classic;startArrow=none;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="qp5eQa1doei-cKYVFk-j-6" target="qp5eQa1doei-cKYVFk-j-4" edge="1">
-          <mxGeometry width="50" height="50" relative="1" as="geometry">
-            <mxPoint x="440" y="550" as="sourcePoint" />
-            <mxPoint x="490" y="500" as="targetPoint" />
-          </mxGeometry>
-        </mxCell>
-        <mxCell id="qp5eQa1doei-cKYVFk-j-6" value="Axios&lt;br&gt;with JWT" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
-          <mxGeometry x="430" y="420" width="60" height="20" as="geometry" />
-        </mxCell>
-        <mxCell id="qp5eQa1doei-cKYVFk-j-7" value="" style="endArrow=none;startArrow=classic;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="qp5eQa1doei-cKYVFk-j-3" target="qp5eQa1doei-cKYVFk-j-6" edge="1">
-          <mxGeometry width="50" height="50" relative="1" as="geometry">
-            <mxPoint x="430" y="430" as="sourcePoint" />
-            <mxPoint x="490" y="430" as="targetPoint" />
-          </mxGeometry>
         </mxCell>
         <mxCell id="qp5eQa1doei-cKYVFk-j-8" value="Port 3000" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
           <mxGeometry x="290" y="470" width="60" height="20" as="geometry" />
@@ -55,11 +40,20 @@
             <mxPoint x="337" y="265" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="FQdL3r2fa_UQj0gtTOz4-2" value="Call auth and get identity" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
-          <mxGeometry x="350" y="280" width="140" height="20" as="geometry" />
+        <mxCell id="FQdL3r2fa_UQj0gtTOz4-2" value="get identity and role" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="340" y="280" width="120" height="20" as="geometry" />
         </mxCell>
         <mxCell id="FQdL3r2fa_UQj0gtTOz4-6" value="AWS #todo" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
           <mxGeometry x="450" y="540" width="40" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="FQdL3r2fa_UQj0gtTOz4-8" value="" style="endArrow=classic;startArrow=classic;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="qp5eQa1doei-cKYVFk-j-3" target="qp5eQa1doei-cKYVFk-j-4">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="430" y="460" as="sourcePoint" />
+            <mxPoint x="480" y="410" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="FQdL3r2fa_UQj0gtTOz4-9" value="Send user information and get message" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="400" y="400" width="120" height="20" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
