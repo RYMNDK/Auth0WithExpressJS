@@ -5,13 +5,13 @@ import { useAuth0 } from '@auth0/auth0-react';
 
 /**
  * This function get messages available to this user
- * @param  {json} token user identity token returned by Auth0
- * @return {List}       List of secrets visible to {identity.name}
+ * @param  {json}   token user identity token returned by Auth0
+ * @return {string}       List of secrets visible to this user, seperated by "|"
  */
 async function getMessages(token){
-    var messages = "hard coded messages";
+    var messages = "";
 
-    //express server listening on 8000
+    //express backend server listening on port 8000
     await fetch("http://localhost:8000/api/getMessages", {
       headers: {
         Authorization: `Bearer ${token}`
@@ -21,14 +21,12 @@ async function getMessages(token){
             if (res.status === 200 || res.status === 304) {
                 //get messages from response body
                 await res.json().then ( async (result) => { 
-                    console.log(result.messages);
                     messages = (result.messages);
                     return messages;
                 } );
             } else {
                 //most likely token expired
-                messages = ("Error in API CALL");
-                return messages;
+                return ("Error in API CALL");
             }       
         }
     )

@@ -15,12 +15,11 @@ const resources = {
     "read:message3" : "Message 3: visible to Alex and Matt"
 };
 
-require('dotenv').config();
+require('dotenv').config(); //load additional setting into environment
 const express = require("express");
 const http = require('http');
 const morgan = require("morgan");
 const helmet = require("helmet");
-
 const cors = require('cors');
 
 const jwt = require("express-jwt");
@@ -34,7 +33,7 @@ const appUrl = `http://localhost:${process.env.PORT}`;
 app.use(morgan("common"));
 app.use(helmet())
 
-//using cors because request is from 3000
+//using cors because request is from a different domain
 app.use(cors({
     origin: ["http://localhost:3000"],
     methods: ["GET"],
@@ -59,7 +58,7 @@ const checkPermissions = jwtAuthz(["read:message1", "read:message2", "read:messa
     customScopeKey: "permissions"
 });
 
-//check the req token first
+//Check the token is valid and has at least one read message permission
 app.get("/api/getMessages", authorizeAccessToken, checkPermissions,
 (req, res) => {
 
@@ -68,7 +67,7 @@ app.get("/api/getMessages", authorizeAccessToken, checkPermissions,
     console.log(authToken);
     var message = getResourceFromAuthenticationHeader(authToken);
 
-    //return response to sender
+    //return response (200) to sender with messages
     res.status(200).json({
         "messages" : message
     });
@@ -77,19 +76,19 @@ app.get("/api/getMessages", authorizeAccessToken, checkPermissions,
 /**
  * Get the messages available to this token, no checking is required since its done already
  * @param {JWTToken} token the token in the authentication header
+ * @return {string}        string representation of messages available to this token
  */
 function getResourceFromAuthenticationHeader(token) {
-    const seperator = "|";
+    const seperator = "|";  //seperater set by frontend
     var longstring = "";
 
+    //decode the jwt 
     var decodedJWT = jwt_decode(token)["permissions"];
     
     longstring = (decodedJWT
-        .map((x) => (resources[x]))                 //map permission to resource
-        .reduce((acc, cur) => (acc + seperator + cur))    //flatten the list
+        .map((x) => (resources[x]))                     //map permission to resource
+        .reduce((acc, cur) => (acc + seperator + cur))  //flatten the list and add in seperator
         );
-
-    console.log(longstring)
 
     return longstring;
 }
