@@ -5,7 +5,7 @@
 * install dependencies for frontend and start frontend (brower should open automacially)
 ``cd Auth0WithExpressJS\Front && npm start`` 
 * click on log in button
-* log in with from \Docs\testCreds.md
+* log in with credentials from \Docs\testCreds.md
 * click on show messages button (IMPORTANT)
 * click on the log out button
 
