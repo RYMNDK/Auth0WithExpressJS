@@ -1,5 +1,5 @@
 # Auth0WithExpressJS
-##Quickstart
+## Quickstart
 * install dependencies for backend and start backend 
 ``cd Auth0WithExpressJS\Back && npm start``
 * install dependencies for frontend and start frontend (brower should open automacially)
