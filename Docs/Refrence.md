@@ -11,5 +11,6 @@
 * [React Conf 2018: Understanding React's hooks proposal with simple examples](https://enmascript.com/articles/2018/10/26/react-conf-2018-understanding-react-hooks-proposal-with-simple-examples)
 
 ## Backend
+* [Express application generator](http://expressjs.com/en/starter/generator.html)
 * [How to Authenticate Users and Implement CORS in Node.js Apps](https://www.freecodecamp.org/news/how-to-authenticate-users-and-implement-cors-in-nodejs-applications/)
-* [Setting Up 5 Useful Middlewares For An Express API | Jscrambler Blog](https://blog.jscrambler.com/setting-up-5-useful-middlewares-for-an-express-api/)
+* [Setting Up 5 Useful Middlewares For An Express API | Jscrambler Blog(Optional)](https://blog.jscrambler.com/setting-up-5-useful-middlewares-for-an-express-api/)
