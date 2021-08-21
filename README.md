@@ -1,9 +1,9 @@
 # Auth0WithExpressJS
 ## Quickstart
 * install dependencies for backend and start backend 
-``cd Auth0WithExpressJS\Back && npm start``
+``cd Auth0WithExpressJS/Back && npm start``
 * install dependencies for frontend and start frontend (brower should open automacially)
-``cd Auth0WithExpressJS\Front && npm start`` 
+``cd Auth0WithExpress/Front && npm start`` 
 * click on log in button
 * log in with credentials from \Docs\testCreds.md
 * click on show messages button (IMPORTANT)
