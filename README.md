@@ -14,5 +14,3 @@
 * Configuration for Auth0 is at Front/src/App.js and /Back/.env
 * Backend returns a long String of all the messages joined by | symbol
 
-## Walkthrough and Recreate
-* Contact me @ https://discord.gg/KQNPVrFf6a
