@@ -1,7 +1,9 @@
 # Additional feature that can be implemented
-* AWS deployment (clone from github)
-* Redis caching
-* https and fs read certification
-* mongodb for resource storage
-* automated testing
-* CI/CD
+
+- (IMPORTANT) Auth0 endpoint is not working, need to set up again.
+- AWS deployment (clone from github)
+- Redis caching
+- https and fs read certification
+- mongodb for resource storage
+- automated testing
+- CI/CD
